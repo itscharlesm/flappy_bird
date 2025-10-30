@@ -2,7 +2,7 @@ const startBtn = document.getElementById("startBtn");
 const startCard = document.getElementById("startCard");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const flapSound = document.getElementById("flapSound");
+const bgMusic = document.getElementById("bgMusic"); // 🎵 Background music
 
 let birdY = canvas.height / 2;
 let birdX = 50;
@@ -29,6 +29,8 @@ function startGame() {
     startCard.style.display = "none";
     canvas.style.display = "block";
     resetRound(true); // full reset
+    bgMusic.currentTime = 0;
+    bgMusic.play(); // 🎵 start looping music
     requestAnimationFrame(update);
 }
 
@@ -40,7 +42,8 @@ document.addEventListener("keydown", e => {
 canvas.addEventListener("click", () => {
     if (!gameOver) flap();
     else {
-        // 🧠 When you die, restart from zero
+        // 🧠 Game Over — show restart card
+        bgMusic.pause(); // 🎵 stop background music
         startCard.style.display = "block";
         canvas.style.display = "none";
         startCard.innerHTML = `
@@ -57,8 +60,6 @@ canvas.addEventListener("click", () => {
 
 function flap() {
     velocity = jump;
-    flapSound.currentTime = 0;
-    flapSound.play();
 }
 
 // ✅ resetRound: reset gameplay (keep or reset score)
@@ -104,13 +105,16 @@ function update() {
         ctx.fillRect(pipe.x, 0, 50, pipe.topHeight);
         ctx.fillRect(pipe.x, pipe.bottomY, 50, canvas.height - pipe.bottomY);
 
-        // Collision
-        if (
+        // Collision first
+        const hitPipe =
             birdX + 15 > pipe.x &&
             birdX - 15 < pipe.x + 50 &&
-            (birdY - 10 < pipe.topHeight || birdY + 10 > pipe.bottomY)
-        ) {
+            (birdY - 10 < pipe.topHeight || birdY + 10 > pipe.bottomY);
+
+        if (hitPipe) {
             gameOver = true;
+            bgMusic.pause(); // 🎵 stop on collision
+            break;
         }
 
         // ✅ Scoring (only if not game over)
@@ -148,6 +152,7 @@ function update() {
     // Ground/ceiling collision
     if (birdY + 10 > canvas.height || birdY - 10 < 0) {
         gameOver = true;
+        bgMusic.pause(); // 🎵 stop if hit ground or ceiling
     }
 
     // Game over overlay
@@ -176,6 +181,7 @@ function checkMilestone(currentScore) {
 
 // 🪧 Show milestone overlay
 function showMilestoneMessage(text) {
+    bgMusic.pause(); // 🎵 pause background while showing message
     canvas.style.display = "none";
     startCard.innerHTML = `
         <h1>🐤 Flappy Bird</h1>
@@ -188,6 +194,7 @@ function showMilestoneMessage(text) {
         startCard.style.display = "none";
         canvas.style.display = "block";
         resetRound(false); // 🟡 don't reset score
+        bgMusic.play(); // 🎵 resume background music
         requestAnimationFrame(update);
     });
 }
