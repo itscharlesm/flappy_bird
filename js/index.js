@@ -17,9 +17,9 @@ let milestoneShown = false;
 
 // 🎯 Milestone messages
 const milestones = [
-    { points: 5, message: "🎉 Great job! You reached 5 points!" },
-    { points: 10, message: "🔥 Awesome! 10 points already!" },
-    { points: 20, message: "🏆 Incredible! 20 points reached!" }
+    { points: 5, message: "🎉 Good morning my pretty baby iaaah! It's the first day of November so start your day with your lovely smile. Just know that I'm really blessed to have you in my life by. This might not be much but, I hope these message will sink in your mind. Goodluck!" },
+    { points: 10, message: "🔥 Charrr! Naka 10 points na siya. Hapit na ma touch naka, chrlng go byyy ayaw give up kaya na 20 points!" },
+    { points: 20, message: "🏆 Woooow! Na reach niya ang 20. Congrats byyy! Unta wala ka na stress kay ang purpose ani is para malingaw ug ma challenge ka. May pa ganto? Syempre, it's not just a game but also a reminder not to give up. There are times na magkamali ka, ayaw nato huna hunaa ang importante unsaon nimo pag bawi sa remainder questions. Near na kaayo ang board exam, and I know deep inside pressured naka and kulbaan naka. Ang mga anxieties mu sink in na saimo. But I know you're prepared so believe in yourself by. You're smart, you're a hardworking person, and I do admire your resilience in the face of challenges. If there are times na you feel down, you need someone to vent to, talk to, or unsa ba. Remind lng taka na you have me. Fighting byyyy! Get that license! God bless youuuu! I love you by!" }
 ];
 
 // Start button
@@ -48,8 +48,8 @@ canvas.addEventListener("click", () => {
         canvas.style.display = "none";
         startCard.innerHTML = `
             <h1>🐤 Flappy Bird</h1>
-            <p>Game Over! You scored <strong>${score}</strong> points.</p>
-            <button id="restartBtn">Restart</button>
+            <p>Awhhh Game Over... You scored <strong>${score}</strong> points. Sige lang try lang usab.</p>
+            <button id="restartBtn">Try Again</button>
         `;
         document.getElementById("restartBtn").addEventListener("click", () => {
             score = 0; // reset score on restart
