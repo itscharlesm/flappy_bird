@@ -13,14 +13,24 @@ let pipes = [];
 let gameOver = false;
 let score = 0;
 let pipeSpeed = 1.4;
+let milestoneShown = false;
+
+// 🎯 Milestone messages
+const milestones = [
+    { points: 5, message: "🎉 Great job! You reached 5 points!" },
+    { points: 10, message: "🔥 Awesome! 10 points already!" },
+    { points: 20, message: "🏆 Incredible! 20 points reached!" }
+];
 
 // Start button
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", startGame);
+
+function startGame() {
     startCard.style.display = "none";
     canvas.style.display = "block";
-    resetGame();
+    resetRound(true); // full reset
     requestAnimationFrame(update);
-});
+}
 
 // Controls
 document.addEventListener("keydown", e => {
@@ -30,8 +40,18 @@ document.addEventListener("keydown", e => {
 canvas.addEventListener("click", () => {
     if (!gameOver) flap();
     else {
-        resetGame();
-        requestAnimationFrame(update);
+        // 🧠 When you die, restart from zero
+        startCard.style.display = "block";
+        canvas.style.display = "none";
+        startCard.innerHTML = `
+            <h1>🐤 Flappy Bird</h1>
+            <p>Game Over! You scored <strong>${score}</strong> points.</p>
+            <button id="restartBtn">Restart</button>
+        `;
+        document.getElementById("restartBtn").addEventListener("click", () => {
+            score = 0; // reset score on restart
+            startGame();
+        });
     }
 });
 
@@ -41,12 +61,15 @@ function flap() {
     flapSound.play();
 }
 
-function resetGame() {
+// ✅ resetRound: reset gameplay (keep or reset score)
+function resetRound(fullReset) {
     birdY = canvas.height / 2;
     velocity = 0;
     pipes = [];
-    score = 0;
     gameOver = false;
+    milestoneShown = false;
+
+    if (fullReset) score = 0; // reset score only on full restart
     pipes.push(createPipe());
 }
 
@@ -57,7 +80,7 @@ function createPipe() {
         x: canvas.width,
         topHeight: topHeight,
         bottomY: topHeight + gap,
-        passed: false // 👈 new flag for scoring
+        passed: false
     };
 }
 
@@ -90,10 +113,13 @@ function update() {
             gameOver = true;
         }
 
-        // ✅ Scoring fix — increase score once per pipe
-        if (!pipe.passed && pipe.x + 50 < birdX) {
+        // ✅ Scoring (only if not game over)
+        if (!pipe.passed && pipe.x + 50 < birdX && !gameOver) {
             score++;
             pipe.passed = true;
+
+            // 🎯 Check for milestone
+            checkMilestone(score);
         }
 
         // Remove off-screen pipes
@@ -137,4 +163,31 @@ function update() {
     }
 
     requestAnimationFrame(update);
+}
+
+// 🎯 Check for milestone messages
+function checkMilestone(currentScore) {
+    const milestone = milestones.find(m => m.points === currentScore);
+    if (milestone && !milestoneShown) {
+        milestoneShown = true;
+        showMilestoneMessage(milestone.message);
+    }
+}
+
+// 🪧 Show milestone overlay
+function showMilestoneMessage(text) {
+    canvas.style.display = "none";
+    startCard.innerHTML = `
+        <h1>🐤 Flappy Bird</h1>
+        <p>${text}</p>
+        <button id="continueBtn">Continue</button>
+    `;
+    startCard.style.display = "block";
+
+    document.getElementById("continueBtn").addEventListener("click", () => {
+        startCard.style.display = "none";
+        canvas.style.display = "block";
+        resetRound(false); // 🟡 don't reset score
+        requestAnimationFrame(update);
+    });
 }
