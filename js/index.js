@@ -117,7 +117,7 @@ function update() {
     // Draw score
     ctx.fillStyle = "black";
     ctx.font = "20px Arial";
-    ctx.fillText("Score: " + score, 10, 30);
+    ctx.fillText("Points: " + score, 10, 30);
 
     // Ground/ceiling collision
     if (birdY + 10 > canvas.height || birdY - 10 < 0) {
