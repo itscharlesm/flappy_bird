@@ -75,7 +75,7 @@ function resetRound(fullReset) {
 }
 
 function createPipe() {
-    const gap = 170;
+    const gap = 220;
     const topHeight = Math.random() * (canvas.height - gap - 100) + 50;
     return {
         x: canvas.width,
