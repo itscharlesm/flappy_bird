@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>All Around Calculator</title>
+    <title>Flappy Bird Simple</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Fonts -->
@@ -18,10 +18,17 @@
 
 <body>
     <!-- Developed by GrabCharles -->
-    
-    <audio id="problemFunctionSound" src="css/sounds/seasons.mp3" preload="auto"></audio>
 
-    <!-- JS -->
+    <div class="card" id="startCard">
+        <h1>🐤 Flappy Bird</h1>
+        <p>Click Start to begin your flight!</p>
+        <button id="startBtn">Start</button>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="500"></canvas>
+
+    <audio id="flapSound" src="css/sounds/seasons.mp3" preload="auto"></audio>
+
     <script src="js/index.js"></script>
 </body>
 
