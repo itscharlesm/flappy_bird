@@ -43,7 +43,7 @@ canvas.addEventListener("click", () => {
     if (!gameOver) flap();
     else {
         // 🧠 Game Over — show restart card
-        bgMusic.pause(); // 🎵 stop background music
+        bgMusic.play();
         startCard.style.display = "block";
         canvas.style.display = "none";
         startCard.innerHTML = `
@@ -113,7 +113,7 @@ function update() {
 
         if (hitPipe) {
             gameOver = true;
-            bgMusic.pause(); // 🎵 stop on collision
+            bgMusic.play();
             break;
         }
 
@@ -152,7 +152,7 @@ function update() {
     // Ground/ceiling collision
     if (birdY + 10 > canvas.height || birdY - 10 < 0) {
         gameOver = true;
-        bgMusic.pause(); // 🎵 stop if hit ground or ceiling
+        bgMusic.play();
     }
 
     // Game over overlay
@@ -181,7 +181,7 @@ function checkMilestone(currentScore) {
 
 // 🪧 Show milestone overlay
 function showMilestoneMessage(text) {
-    bgMusic.pause(); // 🎵 pause background while showing message
+    bgMusic.play();
     canvas.style.display = "none";
     startCard.innerHTML = `
         <h1>🐤 Flappy Bird</h1>
