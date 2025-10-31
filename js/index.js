@@ -47,7 +47,7 @@ canvas.addEventListener("click", () => {
         startCard.style.display = "block";
         canvas.style.display = "none";
         startCard.innerHTML = `
-            <h1>🐤 Flappy Bird</h1>
+            <h1>Flappy Bird 🐤</h1>
             <p>Awhhh Game Over... You scored <strong>${score}</strong> points. Sige lang try lang usab.</p>
             <button id="restartBtn">Try Again</button>
         `;
@@ -184,7 +184,7 @@ function showMilestoneMessage(text) {
     bgMusic.play();
     canvas.style.display = "none";
     startCard.innerHTML = `
-        <h1>🐤 Flappy Bird</h1>
+        <h1>Flappy Bird 🐤</h1>
         <p>${text}</p>
         <button id="continueBtn">Continue</button>
     `;
